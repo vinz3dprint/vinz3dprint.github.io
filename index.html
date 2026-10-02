@@ -101,3 +101,100 @@ document.querySelector('#quoteForm').addEventListener('submit', async e => {
   e.target.reset();
   document.querySelector('#fileName').textContent = '';
 });
+                                                                   <!-- Include Forminit SDK -->
+<script src="https://forminit.com/sdk/v1/forminit.js"></script>
+
+<!-- Your Form -->
+<form id="contact-form" enctype="multipart/form-data">
+
+  <!-- sender: who submitted the form -->
+  <input name="fi-sender-firstName" placeholder="First name" />
+  <input name="fi-sender-lastName"  placeholder="Last name" />
+  <!-- Single-field alternative to firstName/lastName -->
+  <input name="fi-sender-fullName"  placeholder="Full name" />
+  <input name="fi-sender-email"     placeholder="Email" />
+  <input name="fi-sender-phone"     placeholder="Phone" />
+  <input name="fi-sender-title"     placeholder="Title (Mr., Ms., Dr.)" />
+  <input name="fi-sender-company"   placeholder="Company" />
+  <input name="fi-sender-position"  placeholder="Job title" />
+  <input name="fi-sender-address"   placeholder="Address" />
+  <input name="fi-sender-address2"  placeholder="Address line 2 (apt, suite, etc.)" />
+  <input name="fi-sender-city"      placeholder="City" />
+  <input name="fi-sender-postcode"  placeholder="Postcode / ZIP" />
+  <input name="fi-sender-country"   placeholder="Country (ISO 3166-1 alpha-2, e.g. US)" />
+  <input type="hidden" name="fi-sender-userId" value="ext_12345" />
+
+  <!-- text: free-form answer, no validation -->
+  <textarea name="fi-text-message" placeholder="Message"></textarea>
+
+  <!-- number: any numeric value -->
+  <input type="number" name="fi-number-budget" placeholder="Budget" />
+
+  <!-- email: a second email beyond the sender's -->
+  <input type="email" name="fi-email-invitee" placeholder="Invitee email" />
+
+  <!-- phone: a second phone beyond the sender's, E.164 format -->
+  <input type="tel" name="fi-phone-emergency" placeholder="Emergency contact" />
+
+  <!-- url: validated as a URL -->
+  <input type="url" name="fi-url-website" placeholder="Your website" />
+
+  <!-- select: single or multi choice -->
+  <select name="fi-select-plan">
+    <option value="basic">Basic</option>
+    <option value="pro">Pro</option>
+    <option value="enterprise">Enterprise</option>
+  </select>
+
+  <!-- radio: single choice from a group -->
+  <label><input type="radio" name="fi-radio-priority" value="low"  /> Low</label>
+  <label><input type="radio" name="fi-radio-priority" value="high" /> High</label>
+
+  <!-- checkbox: one or more choices, same name = array -->
+  <label><input type="checkbox" name="fi-checkbox-features" value="api" />     API</label>
+  <label><input type="checkbox" name="fi-checkbox-features" value="support" /> Support</label>
+
+  <!-- rating: integer between 1 and 5 -->
+  <input type="range" name="fi-rating-satisfaction" min="1" max="5" step="1" value="3" />
+
+  <!-- date: ISO 8601 date or date-time -->
+  <input type="date" name="fi-date-appointment" />
+
+  <!-- file: requires multipart/form-data (FormData uses it by default) -->
+  <input type="file" name="fi-file-resume" />
+  <!-- Multiple files: append [] to the name and add the multiple attribute -->
+  <input type="file" name="fi-file-attachments[]" multiple />
+
+  <!-- country: ISO 3166-1 alpha-2 code. Full list: https://gist.github.com/ssskip/5a94bfcd2835bf1dea52 -->
+  <select name="fi-country-shipping">
+    <option value="US">United States</option>
+    <option value="GB">United Kingdom</option>
+  </select>
+
+  <!-- tracking: auto-captured by the SDK from URL params and referrer -->
+
+  <button type="submit">Send</button>
+  <p id="form-status"></p>
+</form>
+
+<script>
+  const forminit = new Forminit();
+  const FORM_ID = "fzjfc5jnliy";
+
+  document.getElementById("contact-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const { data, error } = await forminit.submit(FORM_ID, formData);
+
+    const status = document.getElementById("form-status");
+
+    if (error) {
+      status.textContent = error.message;
+      return;
+    }
+
+    status.textContent = "Message sent successfully!";
+    e.target.reset();
+  });
+</script>
