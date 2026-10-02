@@ -4,940 +4,110 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Laagje voor Laagje — 3D printen</title>
-
 <style>
 :root{
-  --bg:#f7f4ec;
-  --surface:#fffdf8;
-  --ink:#202132;
-  --muted:#676879;
-  --navy:#232338;
-  --coral:#ff5648;
-  --yellow:#ffd21c;
-  --blue:#2477d8;
-  --gold:#d5a333;
-  --dark:#3b3d47;
-  --light:#aeb1b5;
-  --black:#11151b;
-  --red:#d91e32;
-  --orange:#ff7000;
-  --line:#e9e2d5;
+  --bg:#f7f4ec; --surface:#fffdf8; --ink:#202132; --muted:#676879; --navy:#232338;
+  --coral:#ff5648; --yellow:#ffd21c; --blue:#2477d8; --gold:#d5a333; --dark:#3b3d47;
+  --light:#aeb1b5; --black:#11151b; --red:#d91e32; --orange:#ff7000; --line:#e9e2d5;
 }
-
 *{box-sizing:border-box}
-
 html{scroll-behavior:smooth}
-
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--ink);
-  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  line-height:1.5
-}
-
-button,input,textarea,select{font:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5}
+button,input,textarea{font:inherit}
 button{cursor:pointer}
-
-.app{
-  min-height:100vh;
-  background:
-    radial-gradient(circle at 8% 8%,#ffd21c22 0 13%,transparent 28%),
-    radial-gradient(circle at 92% 28%,#2477d822 0 12%,transparent 27%),
-    linear-gradient(180deg,#fffdf8 0%,#f8f1e4 48%,#fffdf8 100%)
-}
-
-/* NAVIGATIE */
-
-.nav{
-  position:sticky;
-  top:0;
-  z-index:20;
-  background:rgba(255,253,248,.9);
-  backdrop-filter:blur(16px);
-  border-bottom:1px solid rgba(233,226,213,.8)
-}
-
-.nav-inner{
-  max-width:1180px;
-  margin:auto;
-  padding:14px 22px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:11px;
-  text-decoration:none;
-  color:var(--ink);
-  font-weight:900;
-  letter-spacing:-.04em
-}
-
-.logo{
-  width:42px;
-  height:42px;
-  border-radius:13px;
-  background:var(--navy);
-  display:grid;
-  place-items:center
-}
-
+.app{min-height:100vh;background:linear-gradient(180deg,#fffdf8 0%,#f7f4ec 55%,#fffdf8 100%)}
+.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.9);backdrop-filter:blur(16px);border-bottom:1px solid rgba(233,226,213,.8)}
+.nav-inner{max-width:1180px;margin:auto;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);font-weight:900;letter-spacing:-.04em}
+.logo{width:42px;height:42px;border-radius:13px;background:var(--navy);display:grid;place-items:center;box-shadow:0 8px 22px #23233822}
 .logo svg{width:28px;height:28px}
-
 .brand span{font-size:17px}
-
-.brand small{
-  display:block;
-  font-size:10px;
-  letter-spacing:.12em;
-  color:var(--coral);
-  text-transform:uppercase;
-  margin-top:-2px
-}
-
-.navlinks{
-  display:flex;
-  gap:24px;
-  align-items:center
-}
-
-.navlinks a{
-  color:var(--muted);
-  font-weight:700;
-  text-decoration:none;
-  font-size:14px
-}
-
+.brand small{display:block;font-size:10px;letter-spacing:.12em;color:var(--coral);text-transform:uppercase;margin-top:-2px}
+.navlinks{display:flex;gap:24px;align-items:center}
+.navlinks a{color:var(--muted);font-weight:700;text-decoration:none;font-size:14px}
 .navlinks a:hover{color:var(--ink)}
-
-.nav-cta{
-  border:0;
-  background:var(--coral);
-  color:white;
-  padding:11px 17px;
-  border-radius:999px;
-  font-weight:800
-}
-
-/* HERO */
-
-.hero{
-  max-width:1180px;
-  margin:auto;
-  padding:76px 22px 58px;
-  display:grid;
-  grid-template-columns:1.08fr .92fr;
-  gap:56px;
-  align-items:center
-}
-
-.eyebrow{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  background:#fff2d6;
-  border:1px solid #f3e4c5;
-  border-radius:999px;
-  padding:7px 12px;
-  font-size:12px;
-  font-weight:900;
-  color:#8a6418;
-  text-transform:uppercase;
-  letter-spacing:.08em
-}
-
-.eyebrow i{
-  width:7px;
-  height:7px;
-  background:var(--coral);
-  border-radius:50%;
-  display:block
-}
-
-.hero h1{
-  font-size:clamp(42px,6vw,74px);
-  line-height:.98;
-  letter-spacing:-.065em;
-  margin:18px 0 20px;
-  max-width:700px
-}
-
+.nav-cta{border:0;background:var(--coral);color:white;padding:11px 17px;border-radius:999px;font-weight:800;box-shadow:0 8px 18px #ff56482d}
+.hero{max-width:1180px;margin:auto;padding:76px 22px 58px;display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:#fff2d6;border:1px solid #f3e4c5;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:900;color:#8a6418;text-transform:uppercase;letter-spacing:.08em}
+.eyebrow i{width:7px;height:7px;background:var(--coral);border-radius:50%;display:block}
+.hero h1{font-size:clamp(42px,6vw,74px);line-height:.98;letter-spacing:-.065em;margin:18px 0 20px;max-width:700px}
 .hero h1 span{color:var(--coral)}
-
-.hero p{
-  font-size:18px;
-  color:var(--muted);
-  max-width:610px;
-  margin:0 0 28px
-}
-
-.hero-actions{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap
-}
-
-.primary,
-.secondary{
-  border:0;
-  border-radius:14px;
-  padding:14px 20px;
-  font-weight:900
-}
-
-.primary{
-  background:var(--navy);
-  color:#fff
-}
-
-.secondary{
-  background:#fff;
-  border:1px solid var(--line);
-  color:var(--ink)
-}
-
-.hero-art{
-  position:relative;
-  min-height:390px;
-  background:linear-gradient(145deg,#232338,#3b2d61 55%,#ff5648);
-  border-radius:34px;
-  overflow:hidden;
-  box-shadow:0 26px 60px #2323382c
-}
-
-.floating{
-  position:absolute;
-  background:#fffdf8;
-  border-radius:18px;
-  padding:10px 13px;
-  box-shadow:0 16px 35px #0003;
-  font-size:12px;
-  font-weight:900;
-  z-index:3
-}
-
+.hero p{font-size:18px;color:var(--muted);max-width:610px;margin:0 0 28px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.primary,.secondary{border:0;border-radius:14px;padding:14px 20px;font-weight:900}
+.primary{background:var(--navy);color:#fff;box-shadow:0 12px 24px #23233820}
+.secondary{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.hero-art{position:relative;min-height:390px;background:var(--navy);border-radius:34px;overflow:hidden;box-shadow:0 26px 60px #2323382c}
+.hero-art:before{content:"";position:absolute;width:330px;height:330px;border-radius:50%;background:#ffffff08;right:-90px;top:-100px}
+.hero-art:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:#ff56481a;left:-50px;bottom:-70px}
+.floating{position:absolute;background:#fffdf8;border-radius:18px;padding:10px 13px;box-shadow:0 16px 35px #0003;font-size:12px;font-weight:900;z-index:3}
 .float1{left:22px;top:24px}
 .float2{right:18px;bottom:25px}
-
-.print-scene{
-  position:absolute;
-  inset:70px 42px 48px;
-  display:grid;
-  place-items:center
-}
-
-.print-bed{
-  position:absolute;
-  width:250px;
-  height:140px;
-  background:#d9d8d3;
-  transform:skewY(-12deg) rotate(-1deg);
-  border-radius:12px;
-  bottom:36px;
-  box-shadow:0 15px 0 #bbb9b4
-}
-
-.cube{
-  position:absolute;
-  width:112px;
-  height:112px;
-  background:linear-gradient(135deg,#ff5648,#d91e32);
-  transform:rotate(30deg) skewY(-8deg);
-  bottom:104px;
-  border-radius:8px;
-  box-shadow:-14px 17px 0 #a91427,13px 13px 0 #ff8a80
-}
-
-.cube:before,
-.cube:after{
-  content:"";
-  position:absolute;
-  background:#ffd0cc
-}
-
-.cube:before{
-  width:100%;
-  height:5px;
-  left:0;
-  top:35px
-}
-
-.cube:after{
-  height:100%;
-  width:5px;
-  left:35px;
-  top:0
-}
-
-.nozzle{
-  position:absolute;
-  bottom:198px;
-  left:50%;
-  width:10px;
-  height:100px;
-  background:#e8e6de;
-  border-radius:9px;
-  transform:translateX(-50%)
-}
-
-.nozzle:after{
-  content:"";
-  position:absolute;
-  bottom:-11px;
-  left:1px;
-  border-left:4px solid transparent;
-  border-right:4px solid transparent;
-  border-top:12px solid var(--orange)
-}
-
-.layer-lines{
-  position:absolute;
-  bottom:111px;
-  width:124px;
-  height:74px;
-  border-bottom:3px solid #ffbbb5;
-  transform:rotate(30deg) skewY(-8deg);
-  opacity:.7;
-  background:repeating-linear-gradient(
-    0deg,
-    transparent 0 8px,
-    #ffbbb5 9px 11px
-  )
-}
-
-/* SECTIES */
-
-.section{
-  max-width:1180px;
-  margin:auto;
-  padding:66px 22px
-}
-
-.section-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  gap:30px;
-  margin-bottom:28px
-}
-
-.section h2{
-  font-size:clamp(30px,4vw,46px);
-  letter-spacing:-.05em;
-  margin:0
-}
-
-.section-head p{
-  max-width:500px;
-  color:var(--muted);
-  margin:0
-}
-
-/* KAARTEN */
-
-.cards{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px
-}
-
-.card{
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-radius:24px;
-  overflow:hidden;
-  box-shadow:0 12px 35px #2b29400b;
-  transition:.2s
-}
-
-.card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 18px 42px #2b294018
-}
-
-.card-art{
-  height:205px;
-  display:grid;
-  place-items:center;
-  background:#f2eee5;
-  position:relative;
-  overflow:hidden
-}
-
-.card:nth-child(3n+2) .card-art{
-  background:linear-gradient(135deg,#e9f5ff,#f7e9ff)
-}
-
-.card:nth-child(3n+3) .card-art{
-  background:linear-gradient(135deg,#fff0e7,#eafff2)
-}
-
-.card-art:after{
-  content:"KLAAR OM TE PRINTEN";
-  position:absolute;
-  top:12px;
-  right:12px;
-  background:#fffdf8cc;
-  border:1px solid #ffffffaa;
-  border-radius:999px;
-  padding:5px 8px;
-  font-size:9px;
-  font-weight:900;
-  letter-spacing:.06em;
-  color:var(--muted)
-}
-
-.model{
-  position:relative;
-  transform:scale(1.05)
-}
-
-.key{
-  width:130px;
-  height:76px;
-  border-radius:18px;
-  background:var(--yellow);
-  box-shadow:0 11px 0 #d9a800;
-  transform:rotate(-7deg)
-}
-
-.key:after{
-  content:"";
-  position:absolute;
-  width:26px;
-  height:26px;
-  border:7px solid #fff7d0;
-  border-radius:50%;
-  right:12px;
-  top:18px
-}
-
-.stand{
-  width:120px;
-  height:100px;
-  background:var(--blue);
-  clip-path:polygon(
-    15% 15%,
-    80% 15%,
-    80% 35%,
-    62% 35%,
-    62% 80%,
-    40% 80%,
-    40% 100%,
-    15% 100%
-  );
-  box-shadow:12px 10px 0 #1658a8
-}
-
-.pot{
-  width:100px;
-  height:90px;
-  background:var(--gold);
-  clip-path:polygon(8% 10%,92% 10%,80% 100%,20% 100%);
-  border-radius:10px;
-  box-shadow:10px 10px 0 #a77b1c
-}
-
-.pot:before{
-  content:"";
-  position:absolute;
-  width:90px;
-  height:24px;
-  background:#3b3d47;
-  border-radius:50%;
-  left:5px;
-  top:-8px
-}
-
-.clip{
-  width:105px;
-  height:115px;
-  border:18px solid var(--red);
-  border-radius:25px 25px 35px 35px;
-  border-bottom-color:transparent;
-  transform:rotate(7deg)
-}
-
-.tag{
-  width:125px;
-  height:72px;
-  background:var(--orange);
-  clip-path:polygon(
-    0 15%,
-    75% 15%,
-    100% 50%,
-    75% 85%,
-    0 85%
-  );
-  border-radius:8px
-}
-
-.tag:after{
-  content:"";
-  position:absolute;
-  right:22px;
-  top:28px;
-  width:14px;
-  height:14px;
-  border:4px solid white;
-  border-radius:50%
-}
-
-.box{
-  width:115px;
-  height:90px;
-  background:var(--dark);
-  border-radius:12px;
-  box-shadow:12px 12px 0 #22242b
-}
-
-.box:before{
-  content:"";
-  position:absolute;
-  width:65px;
-  height:15px;
-  background:var(--light);
-  left:25px;
-  top:23px;
-  border-radius:6px
-}
-
-.coaster{
-  width:105px;
-  height:105px;
-  border-radius:50%;
-  background:var(--light);
-  border:12px solid var(--dark);
-  box-shadow:8px 8px 0 #777
-}
-
-.coaster:after{
-  content:"✦";
-  position:absolute;
-  inset:0;
-  display:grid;
-  place-items:center;
-  color:var(--red);
-  font-size:38px
-}
-
-.hook{
-  width:90px;
-  height:110px;
-  border:18px solid var(--blue);
-  border-bottom-color:transparent;
-  border-radius:45px 45px 0 0;
-  transform:rotate(180deg)
-}
-
-.hook:after{
-  content:"";
-  position:absolute;
-  width:38px;
-  height:15px;
-  background:var(--yellow);
-  bottom:-8px;
-  left:8px;
-  border-radius:8px
-}
-
-.marker{
-  width:28px;
-  height:125px;
-  background:var(--orange);
-  border-radius:7px;
-  transform:rotate(5deg);
-  box-shadow:12px 0 0 var(--gold)
-}
-
-.marker:after{
-  content:"";
-  position:absolute;
-  top:-18px;
-  left:4px;
-  border-left:10px solid transparent;
-  border-right:10px solid transparent;
-  border-bottom:20px solid var(--orange)
-}
-
-.star{
-  width:112px;
-  height:112px;
-  background:var(--red);
-  clip-path:polygon(
-    50% 0,
-    61% 35%,
-    98% 35%,
-    68% 56%,
-    79% 92%,
-    50% 70%,
-    21% 92%,
-    32% 56%,
-    2% 35%,
-    39% 35%
-  );
-  filter:drop-shadow(10px 10px 0 #a91427)
-}
-
-.tray{
-  width:125px;
-  height:80px;
-  background:var(--black);
-  border-radius:12px 12px 24px 24px;
-  box-shadow:10px 10px 0 #555
-}
-
-.tray:after{
-  content:"";
-  position:absolute;
-  width:70px;
-  height:12px;
-  background:var(--gold);
-  left:27px;
-  top:22px;
-  border-radius:8px
-}
-
-/* SPEELGOED */
-
-.spinner{
-  width:105px;
-  height:105px;
-  border-radius:50%;
-  background:var(--blue);
-  position:relative;
-  box-shadow:8px 9px 0 #1658a8
-}
-
-.spinner:before,
-.spinner:after{
-  content:"";
-  position:absolute;
-  background:var(--yellow);
-  border-radius:50%;
-  width:34px;
-  height:34px
-}
-
-.spinner:before{
-  left:-10px;
-  top:35px
-}
-
-.spinner:after{
-  right:-10px;
-  top:35px
-}
-
-.cube-fidget{
-  width:92px;
-  height:92px;
-  background:var(--orange);
-  border-radius:16px;
-  transform:rotate(18deg);
-  box-shadow:9px 9px 0 #c64d00
-}
-
-.cube-fidget:after{
-  content:"↻";
-  position:absolute;
-  inset:0;
-  display:grid;
-  place-items:center;
-  color:white;
-  font-size:52px;
-  font-weight:900
-}
-
-.flexi{
-  width:110px;
-  height:45px;
-  border-radius:24px;
-  background:var(--red);
-  box-shadow:0 10px 0 #a91427;
-  transform:rotate(-8deg)
-}
-
-.gear{
-  width:108px;
-  height:108px;
-  border-radius:50%;
-  background:var(--gold);
-  box-shadow:8px 8px 0 #a77b1c;
-  display:grid;
-  place-items:center;
-  font-size:50px;
-  color:white
-}
-
-.sensory-ball{
-  width:105px;
-  height:105px;
-  border-radius:50%;
-  background:var(--blue);
-  box-shadow:8px 8px 0 #1658a8;
-  position:relative
-}
-
-.sensory-ball:after{
-  content:"••••••••";
-  letter-spacing:7px;
-  color:#ffd21c;
-  font-size:25px;
-  position:absolute;
-  inset:35px -2px 0
-}
-
-.duck{
-  width:105px;
-  height:78px;
-  background:var(--yellow);
-  border-radius:55% 55% 45% 45%;
-  box-shadow:8px 9px 0 #d9a800
-}
-
-.duck:after{
-  content:"";
-  position:absolute;
-  width:34px;
-  height:15px;
-  background:var(--orange);
-  border-radius:50%;
-  right:-14px;
-  top:31px
-}
-
-.duck:before{
-  content:"•  •";
-  position:absolute;
-  color:var(--navy);
-  font-size:20px;
-  left:31px;
-  top:18px;
-  letter-spacing:14px
-}
-
+.print-scene{position:absolute;inset:70px 42px 48px;display:grid;place-items:center}
+.print-bed{position:absolute;width:250px;height:140px;background:#d9d8d3;transform:skewY(-12deg) rotate(-1deg);border-radius:12px;bottom:36px;box-shadow:0 15px 0 #bbb9b4}
+.cube{position:absolute;width:112px;height:112px;background:linear-gradient(135deg,#ff5648,#d91e32);transform:rotate(30deg) skewY(-8deg);bottom:104px;border-radius:8px;box-shadow:-14px 17px 0 #a91427, 13px 13px 0 #ff8a80}
+.cube:before,.cube:after{content:"";position:absolute;background:#ffd0cc}
+.cube:before{width:100%;height:5px;left:0;top:35px}
+.cube:after{height:100%;width:5px;left:35px;top:0}
+.nozzle{position:absolute;bottom:198px;left:50%;width:10px;height:100px;background:#e8e6de;border-radius:9px;transform:translateX(-50%);box-shadow:0 0 0 6px #ffffff10}
+.nozzle:after{content:"";position:absolute;bottom:-11px;left:1px;border-left:4px solid transparent;border-right:4px solid transparent;border-top:12px solid var(--orange)}
+.layer-lines{position:absolute;bottom:111px;width:124px;height:74px;border-bottom:3px solid #ffbbb5;transform:rotate(30deg) skewY(-8deg);opacity:.7;background:repeating-linear-gradient(0deg,transparent 0 8px,#ffbbb5 9px 11px)}
+.section{max-width:1180px;margin:auto;padding:66px 22px}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:28px}
+.section h2{font-size:clamp(30px,4vw,46px);letter-spacing:-.05em;margin:0}
+.section-head p{max-width:500px;color:var(--muted);margin:0}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:0 12px 35px #2b29400b;transition:.2s}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 42px #2b294018}
+.card-art{height:205px;display:grid;place-items:center;background:#f2eee5;position:relative;overflow:hidden}
+.card-art:after{content:"KLAAR OM TE PRINTEN";position:absolute;top:12px;right:12px;background:#fffdf8cc;border:1px solid #ffffffaa;border-radius:999px;padding:5px 8px;font-size:9px;font-weight:900;letter-spacing:.06em;color:var(--muted)}
+.model{position:relative;transform:scale(1.05)}
+.key{width:130px;height:76px;border-radius:18px;background:var(--yellow);box-shadow:0 11px 0 #d9a800,10px 12px 20px #8a641833;transform:rotate(-7deg)}
+.key:after{content:"";position:absolute;width:26px;height:26px;border:7px solid #fff7d0;border-radius:50%;right:12px;top:18px}
+.stand{width:120px;height:100px;background:var(--blue);clip-path:polygon(15% 15%,80% 15%,80% 35%,62% 35%,62% 80%,40% 80%,40% 100%,15% 100%);border-radius:10px;box-shadow:12px 10px 0 #1658a8,10px 18px 22px #1658a833}
+.pot{width:100px;height:90px;background:var(--gold);clip-path:polygon(8% 10%,92% 10%,80% 100%,20% 100%);border-radius:10px;box-shadow:10px 10px 0 #a77b1c,8px 15px 20px #a77b1c33}
+.pot:before{content:"";position:absolute;width:90px;height:24px;background:#3b3d47;border-radius:50%;left:5px;top:-8px}
+.clip{width:105px;height:115px;border:18px solid var(--red);border-radius:25px 25px 35px 35px;border-bottom-color:transparent;transform:rotate(7deg);filter:drop-shadow(8px 10px 10px #a9142733)}
+.tag{width:125px;height:72px;background:var(--orange);clip-path:polygon(0 15%,75% 15%,100% 50%,75% 85%,0 85%);border-radius:8px;filter:drop-shadow(8px 10px 10px #ff700033)}
+.tag:after{content:"";position:absolute;right:22px;top:28px;width:14px;height:14px;border:4px solid white;border-radius:50%}
+.box{width:115px;height:90px;background:var(--dark);border-radius:12px;box-shadow:12px 12px 0 #22242b,8px 16px 20px #22242b33}
+.box:before{content:"";position:absolute;width:65px;height:15px;background:var(--light);left:25px;top:23px;border-radius:6px}
 .card-body{padding:18px}
-
-.card h3{
-  margin:0 0 5px;
-  font-size:18px
-}
-
-.card p{
-  margin:0 0 15px;
-  color:var(--muted);
-  font-size:14px;
-  min-height:42px
-}
-
-.pill{
-  display:inline-flex;
-  border-radius:999px;
-  padding:6px 10px;
-  background:#f2eee5;
-  font-size:12px;
-  font-weight:800
-}
-
-.use{
-  float:right;
-  border:0;
-  background:var(--navy);
-  color:white;
-  border-radius:10px;
-  padding:8px 12px;
-  font-size:12px;
-  font-weight:900
-}
-
+.card h3{margin:0 0 5px;font-size:18px}
+.card p{margin:0 0 15px;color:var(--muted);font-size:14px;min-height:42px}
+.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:#f2eee5;font-size:12px;font-weight:800}
+.use{float:right;border:0;background:var(--navy);color:white;border-radius:10px;padding:8px 12px;font-size:12px;font-weight:900}
 .use:hover{background:var(--coral)}
-
-/* WERKWIJZE */
-
-.how{
-  background:var(--navy);
-  color:white
-}
-
+.how{background:var(--navy);color:white}
 .how .section-head p{color:#c5c5d1}
-
-.steps{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px
-}
-
-.step{
-  border:1px solid #ffffff16;
-  background:#ffffff08;
-  border-radius:22px;
-  padding:25px
-}
-
-.num{
-  width:38px;
-  height:38px;
-  border-radius:12px;
-  background:var(--coral);
-  display:grid;
-  place-items:center;
-  font-weight:900;
-  margin-bottom:18px
-}
-
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.step{border:1px solid #ffffff16;background:#ffffff08;border-radius:22px;padding:25px}
+.num{width:38px;height:38px;border-radius:12px;background:var(--coral);display:grid;place-items:center;font-weight:900;margin-bottom:18px}
 .step h3{margin:0 0 7px}
-
-.step p{
-  margin:0;
-  color:#c7c7d3;
-  font-size:14px
-}
-
-/* OFFERTE */
-
-.quote-wrap{
-  display:grid;
-  grid-template-columns:.8fr 1.2fr;
-  gap:24px
-}
-
-.quote-intro{
-  background:linear-gradient(145deg,#ffd21c,#ffb80e);
-  border-radius:28px;
-  padding:34px
-}
-
+.step p{margin:0;color:#c7c7d3;font-size:14px}
+.quote-wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:24px;align-items:stretch}
+.quote-intro{background:linear-gradient(145deg,#ffd21c,#ffb80e);border-radius:28px;padding:34px;position:relative;overflow:hidden}
 .quote-intro h2{max-width:360px}
-
-.quote-intro p{
-  max-width:360px;
-  color:#4b401e
-}
-
-.form{
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-radius:28px;
-  padding:28px
-}
-
-.grid2{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px
-}
-
+.quote-intro p{max-width:360px;color:#4b401e}
+.quote-intro .mini-logo{position:absolute;right:25px;bottom:22px;width:62px;height:62px;background:#232338;border-radius:18px;display:grid;place-items:center}
+.form{background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:28px;box-shadow:0 14px 40px #2b294010}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .field{margin-bottom:14px}
-
-.field label{
-  display:block;
-  font-size:12px;
-  font-weight:900;
-  margin-bottom:7px
-}
-
-.field input,
-.field textarea,
-.field select{
-  width:100%;
-  border:1px solid var(--line);
-  background:#f4efe5;
-  border-radius:13px;
-  padding:12px 13px;
-  outline:none
-}
-
-.field textarea{
-  min-height:85px;
-  resize:vertical
-}
-
-.upload{
-  border:2px dashed #b8b1a3;
-  border-radius:18px;
-  padding:19px;
-  text-align:center;
-  background:#faf7ef
-}
-
+.field label{display:block;font-size:12px;font-weight:900;margin-bottom:7px}
+.field input,.field textarea{width:100%;border:1px solid var(--line);background:#f4efe5;border-radius:13px;padding:12px 13px;outline:none}
+.field textarea{min-height:85px;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:#aaa}
+.upload{border:2px dashed #b8b1a3;border-radius:18px;padding:19px;text-align:center;background:#faf7ef}
 .upload strong{display:block}
-
-.upload span{
-  font-size:12px;
-  color:var(--muted)
-}
-
+.upload span{font-size:12px;color:var(--muted)}
 .upload input{display:none}
-
-.upload label{
-  display:block;
-  cursor:pointer
-}
-
-.file-name{
-  margin-top:8px;
-  color:var(--coral);
-  font-weight:800;
-  font-size:12px;
-  min-height:18px
-}
-
-.file-success{
-  display:none;
-  margin-top:8px;
-  color:#216326;
-  font-weight:800;
-  font-size:12px
-}
-
-.file-success.show{display:block}
-
-/* KLEUREN */
-
-.colors{
-  display:flex;
-  gap:13px;
-  flex-wrap:wrap;
-  align-items:center
-}
-
-.color-choice{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:6px;
-  cursor:pointer
-}
-
-.color{
-  width:39px;
-  height:39px;
-  border-radius:50%;
-  border:3px solid transparent;
-  box-shadow:
-    inset 0 0 0 1px #0002,
-    0 3px 8px #00000012;
-  transition:.18s
-}
-
-.color-choice.selected .color{
-  outline:2px solid var(--navy);
-  outline-offset:4px;
-  transform:scale(1.05)
-}
-
-.color-choice span:last-child{
-  font-size:10px;
-  font-weight:800;
-  color:var(--muted)
-}
-
+.upload label{display:block;cursor:pointer}
+.file-name{margin-top:8px;color:var(--coral);font-weight:800;font-size:12px;min-height:18px}
+.colors{display:flex;gap:13px;flex-wrap:wrap;align-items:center}
+.color-choice{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}
+.color{width:39px;height:39px;border-radius:50%;border:3px solid transparent;box-shadow:inset 0 0 0 1px #0002,0 3px 8px #00000012;transition:.18s}
+.color-choice.selected .color{border-color:transparent;outline:2px solid var(--navy);outline-offset:4px;transform:scale(1.05)}
+.color-choice span:last-child{font-size:10px;font-weight:800;color:var(--muted)}
 .color.yellow{background:var(--yellow)}
 .color.blue{background:var(--blue)}
 .color.gold{background:var(--gold)}
@@ -946,43 +116,16 @@ button{cursor:pointer}
 .color.black{background:var(--black)}
 .color.red{background:var(--red)}
 .color.orange{background:var(--orange)}
-
-.color-price{
-  font-size:12px;
-  font-weight:800;
-  color:var(--coral);
-  margin-top:7px
-}
-
-.color-slots{
-  display:grid;
-  gap:9px;
-  margin-top:10px;
-  max-height:0;
-  opacity:0;
-  overflow:hidden;
-  transition:max-height .28s ease,opacity .22s ease
-}
-
-.color-slots.show{
-  max-height:300px;
-  opacity:1
-}
-
-.color-slot{
-  display:grid;
-  grid-template-columns:30px 1fr;
-  gap:9px;
-  align-items:center
-}
-
-.slot-dot{
-  width:30px;
-  height:30px;
-  border-radius:50%;
-  box-shadow:inset 0 0 0 1px #0002
-}
-
+.color-name{font-size:12px;font-weight:800;color:var(--muted);margin-top:7px}
+.submit{width:100%;border:0;border-radius:15px;padding:15px;background:var(--coral);color:#fff;font-weight:900;box-shadow:0 12px 25px #ff56482b}
+.notice{display:none;margin-top:12px;padding:12px 14px;background:#eaf7e9;color:#216326;border-radius:12px;font-weight:800;font-size:13px}
+.notice.show{display:block}
+.file-success{display:none;margin-top:8px;color:#216326;font-weight:800;font-size:12px}
+.file-success.show{display:block}
+.color-slots{display:grid;gap:9px;margin-top:10px;max-height:0;opacity:0;overflow:hidden;transition:max-height .28s ease,opacity .22s ease}
+.color-slots.show{max-height:300px;opacity:1}
+.color-slot{display:grid;grid-template-columns:30px 1fr;gap:9px;align-items:center}
+.slot-dot{width:30px;height:30px;border-radius:50%;box-shadow:inset 0 0 0 1px #0002}
 .slot-dot.yellow{background:var(--yellow)}
 .slot-dot.blue{background:var(--blue)}
 .slot-dot.gold{background:var(--gold)}
@@ -991,960 +134,242 @@ button{cursor:pointer}
 .slot-dot.black{background:var(--black)}
 .slot-dot.red{background:var(--red)}
 .slot-dot.orange{background:var(--orange)}
-
-.color-slot input{
-  width:100%;
-  border:1px solid var(--line);
-  background:#f4efe5;
-  border-radius:11px;
-  padding:9px 10px;
-  outline:none;
-  font-size:13px
-}
-
-.color-help{
-  font-size:12px;
-  color:var(--muted);
-  margin-top:7px
-}
-
-.submit{
-  width:100%;
-  border:0;
-  border-radius:15px;
-  padding:15px;
-  background:var(--coral);
-  color:#fff;
-  font-weight:900
-}
-
-.notice{
-  display:none;
-  margin-top:12px;
-  padding:12px 14px;
-  background:#eaf7e9;
-  color:#216326;
-  border-radius:12px;
-  font-weight:800;
-  font-size:13px
-}
-
-.notice.show{display:block}
-
-/* MAIL KEUZE */
-
-.mail-choice{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:100;
-  background:#20213266;
-  backdrop-filter:blur(5px);
-  padding:20px;
-  align-items:center;
-  justify-content:center
-}
-
+.color-slot select{display:none}
+.color-slot input{width:100%;border:1px solid var(--line);background:#f4efe5;border-radius:11px;padding:9px 10px;outline:none;font-size:13px}
+.color-help{font-size:12px;color:var(--muted);margin-top:7px}
+.color-price{font-size:12px;font-weight:800;color:var(--coral);margin-top:7px}
+.mail-choice{display:none;position:fixed;inset:0;z-index:100;background:#20213266;backdrop-filter:blur(5px);padding:20px;align-items:center;justify-content:center}
 .mail-choice.show{display:flex}
-
-.mail-choice-box{
-  width:min(430px,100%);
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-radius:24px;
-  padding:25px;
-  box-shadow:0 25px 70px #0004
-}
-
-.mail-choice-box h3{
-  margin:0 0 7px;
-  font-size:23px
-}
-
-.mail-choice-box p{
-  margin:0 0 18px;
-  color:var(--muted);
-  font-size:14px
-}
-
-.mail-options{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px
-}
-
-.mail-option,
-.mail-cancel{
-  border:0;
-  border-radius:13px;
-  padding:13px;
-  font-weight:900
-}
-
-.mail-option{
-  background:var(--navy);
-  color:#fff
-}
-
+.mail-choice-box{width:min(430px,100%);background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:25px;box-shadow:0 25px 70px #0004}
+.mail-choice-box h3{margin:0 0 7px;font-size:23px}
+.mail-choice-box p{margin:0 0 18px;color:var(--muted);font-size:14px}
+.mail-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mail-option,.mail-cancel{border:0;border-radius:13px;padding:13px;font-weight:900}
+.mail-option{background:var(--navy);color:#fff}
 .mail-option:hover{background:var(--coral)}
-
-.mail-cancel{
-  width:100%;
-  margin-top:10px;
-  background:#f2eee5;
-  color:var(--ink)
-}
-
-/* FOOTER */
-
-.footer{
-  background:#1d1d2e;
-  color:#c8c8d2;
-  padding:34px 22px
-}
-
-.footer-inner{
-  max-width:1180px;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  gap:20px;
-  align-items:center
-}
-
+.mail-cancel{width:100%;margin-top:10px;background:#f2eee5;color:var(--ink)}
+.footer{background:#1d1d2e;color:#c8c8d2;padding:34px 22px}
+.footer-inner{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:20px;align-items:center}
 .footer strong{color:white}
-
 .footer small{font-size:12px}
-
-/* MOBIEL */
-
 @media(max-width:850px){
-
-  .navlinks{display:none}
-
-  .hero{
-    grid-template-columns:1fr;
-    padding-top:48px
-  }
-
-  .hero-art{min-height:320px}
-
-  .cards{
-    grid-template-columns:1fr 1fr
-  }
-
-  .steps{
-    grid-template-columns:1fr
-  }
-
-  .quote-wrap{
-    grid-template-columns:1fr
-  }
-
-  .section{
-    padding:50px 18px
-  }
-
-  .hero{
-    padding-left:18px;
-    padding-right:18px
-  }
-
-  .grid2{
-    grid-template-columns:1fr
-  }
-
-  .section-head{
-    display:block
-  }
-
-  .section-head p{
-    margin-top:10px
-  }
-
-  .footer-inner{
-    display:block
-  }
-
-  .footer small{
-    display:block;
-    margin-top:10px
-  }
+.navlinks{display:none}
+.hero{grid-template-columns:1fr;padding-top:48px}
+.hero-art{min-height:320px}
+.cards{grid-template-columns:1fr 1fr}
+.steps{grid-template-columns:1fr}
+.quote-wrap{grid-template-columns:1fr}
+.section{padding:50px 18px}
+.hero{padding-left:18px;padding-right:18px}
+.grid2{grid-template-columns:1fr}
+.section-head{display:block}
+.section-head p{margin-top:10px}
+.footer-inner{display:block}
+.footer small{display:block;margin-top:10px}
 }
-
 @media(max-width:560px){
-
-  .cards{
-    grid-template-columns:1fr
-  }
-
-  .hero h1{
-    font-size:46px
-  }
-
-  .hero-art{
-    min-height:285px
-  }
-
-  .print-bed{
-    width:200px
-  }
-
-  .cube{
-    width:88px;
-    height:88px
-  }
-
-  .layer-lines{
-    bottom:105px;
-    width:100px
-  }
-
-  .nozzle{
-    bottom:180px
-  }
+.cards{grid-template-columns:1fr}
+.hero h1{font-size:46px}
+.hero-art{min-height:285px}
+.print-bed{width:200px}
+.cube{width:88px;height:88px}
+.layer-lines{bottom:105px;width:100px}
+.nozzle{bottom:180px}
 }
+.app{background-image:radial-gradient(circle at 8% 8%,#ffd21c22 0 13%,transparent 28%),radial-gradient(circle at 92% 28%,#2477d822 0 12%,transparent 27%),linear-gradient(180deg,#fffdf8 0%,#f8f1e4 48%,#fffdf8 100%)}
+.hero-art{background:linear-gradient(145deg,#232338,#3b2d61 55%,#ff5648)}
+.hero-art:before{background:#ffd21c22}
+.hero-art:after{background:#2477d855}
+.card:nth-child(3n+2) .card-art{background:linear-gradient(135deg,#e9f5ff,#f7e9ff)}
+.card:nth-child(3n+3) .card-art{background:linear-gradient(135deg,#fff0e7,#eafff2)}
+.coaster{width:105px;height:105px;border-radius:50%;background:var(--light);border:12px solid var(--dark);box-shadow:8px 8px 0 #777}
+.coaster:after{content:"✦";position:absolute;inset:0;display:grid;place-items:center;color:var(--red);font-size:38px}
+.hook{width:90px;height:110px;border:18px solid var(--blue);border-bottom-color:transparent;border-radius:45px 45px 0 0;transform:rotate(180deg)}
+.hook:after{content:"";position:absolute;width:38px;height:15px;background:var(--yellow);bottom:-8px;left:8px;border-radius:8px}
+.marker{width:28px;height:125px;background:var(--orange);border-radius:7px;transform:rotate(5deg);box-shadow:12px 0 0 var(--gold)}
+.marker:after{content:"";position:absolute;top:-18px;left:4px;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:20px solid var(--orange)}
+.star{width:112px;height:112px;background:var(--red);clip-path:polygon(50% 0,61% 35%,98% 35%,68% 56%,79% 92%,50% 70%,21% 92%,32% 56%,2% 35%,39% 35%);filter:drop-shadow(10px 10px 0 #a91427)}
+.tray{width:125px;height:80px;background:var(--black);border-radius:12px 12px 24px 24px;box-shadow:10px 10px 0 #555}
+.tray:after{content:"";position:absolute;width:70px;height:12px;background:var(--gold);left:27px;top:22px;border-radius:8px}
+.spinner{width:105px;height:105px;border-radius:50%;background:var(--blue);position:relative;box-shadow:8px 9px 0 #1658a8}
+.spinner:before,.spinner:after{content:"";position:absolute;background:var(--yellow);border-radius:50%;width:34px;height:34px}
+.spinner:before{left:-10px;top:35px}
+.spinner:after{right:-10px;top:35px}
+.cube-fidget{width:92px;height:92px;background:var(--orange);border-radius:16px;transform:rotate(18deg);box-shadow:9px 9px 0 #c64d00}
+.cube-fidget:after{content:"↻";position:absolute;inset:0;display:grid;place-items:center;color:white;font-size:52px;font-weight:900}
+.flexi{width:110px;height:45px;border-radius:24px;background:var(--red);box-shadow:0 10px 0 #a91427;transform:rotate(-8deg)}
+.flexi:before{content:"";position:absolute;left:12px;top:-13px;width:86px;height:45px;border-radius:50%;border:9px dotted #ffb0aa}
+.clicker{width:110px;height:72px;background:var(--dark);border-radius:18px;box-shadow:8px 9px 0 #22242b}
+.clicker:before{content:"";position:absolute;width:44px;height:44px;border-radius:12px;background:var(--yellow);left:33px;top:14px;box-shadow:inset 0 -5px 0 #d9a800}
+.gear{width:108px;height:108px;border-radius:50%;background:var(--gold);box-shadow:8px 8px 0 #a77b1c;display:grid;place-items:center;font-size:50px;color:white}
+.sensory-ball{width:105px;height:105px;border-radius:50%;background:var(--blue);box-shadow:8px 8px 0 #1658a8;position:relative}
+.sensory-ball:after{content:"••••••••";letter-spacing:7px;color:#ffd21c;font-size:25px;position:absolute;inset:35px -2px 0}
+.duck{width:105px;height:78px;background:var(--yellow);border-radius:55% 55% 45% 45%;box-shadow:8px 9px 0 #d9a800}
+.duck:after{content:"";position:absolute;width:34px;height:15px;background:var(--orange);border-radius:50%;right:-14px;top:31px}
+.duck:before{content:"•  •";position:absolute;color:var(--navy);font-size:20px;left:31px;top:18px;letter-spacing:14px}
 </style>
 </head>
-
 <body>
-
 <div class="app">
-
-<header class="nav">
-  <div class="nav-inner">
-
-    <a class="brand" href="#top">
-
-      <div class="logo">
-        <svg viewBox="0 0 40 40" fill="none">
-          <path
-            d="M8 27.5 20 34l12-6.5V12.5L20 6 8 12.5v15Z"
-            stroke="white"
-            stroke-width="2.5"
-          />
-          <path
-            d="M8.5 20 20 26l11.5-6M20 7v19"
-            stroke="#ff5648"
-            stroke-width="2.5"
-          />
-          <path
-            d="M14 10.2 26 16.7"
-            stroke="#ffd21c"
-            stroke-width="2.5"
-          />
-        </svg>
-      </div>
-
-      <div>
-        <span>Laagje voor Laagje</span>
-        <small>3D print studio</small>
-      </div>
-
-    </a>
-
-    <nav class="navlinks">
-      <a href="#ontwerpen">Ontwerpen</a>
-      <a href="#werkwijze">Zo werkt het</a>
-      <a href="#offerte">Offerte</a>
-      <button
-        class="nav-cta"
-        onclick="document.querySelector('#offerte').scrollIntoView()"
-      >
-        Start je print
-      </button>
-    </nav>
-
-  </div>
-</header>
-
-
+<header class="nav"><div class="nav-inner">
+<a class="brand" href="#top"><div class="logo" aria-label="Logo"><svg viewBox="0 0 40 40" fill="none"><path d="M8 27.5 20 34l12-6.5V12.5L20 6 8 12.5v15Z" stroke="white" stroke-width="2.5"/><path d="M8.5 20 20 26l11.5-6M20 7v19" stroke="#ff5648" stroke-width="2.5"/><path d="M14 10.2 26 16.7" stroke="#ffd21c" stroke-width="2.5"/></svg></div><div><span>Laagje voor Laagje</span><small>3D print studio</small></div></a>
+<nav class="navlinks"><a href="#ontwerpen">Ontwerpen</a><a href="#werkwijze">Zo werkt het</a><a href="#offerte">Offerte</a><button class="nav-cta" onclick="document.querySelector('#offerte').scrollIntoView()">Start je print</button></nav>
+</div></header>
 <main id="top">
-
-<!-- HERO -->
-
-<section class="hero">
-
-  <div>
-
-    <div class="eyebrow">
-      <i></i>
-      Van idee naar echt object
-    </div>
-
-    <h1>
-      Jouw idee,<br>
-      <span>laagje voor laagje.</span>
-    </h1>
-
-    <p>
-      Een handig model nodig, een leuk cadeau of gewoon iets dat je nergens
-      kunt vinden? Stuur je eigen ontwerp op óf kies een simpel ontwerp uit
-      onze collectie. Wij printen het voor je.
-    </p>
-
-    <div class="hero-actions">
-
-      <button
-        class="primary"
-        onclick="document.querySelector('#offerte').scrollIntoView()"
-      >
-        Ik wil iets laten printen →
-      </button>
-
-      <button
-        class="secondary"
-        onclick="document.querySelector('#ontwerpen').scrollIntoView()"
-      >
-        Bekijk ontwerpen
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <div class="hero-art">
-
-    <div class="floating float1">
-      ● 8 kleuren beschikbaar
-    </div>
-
-    <div class="floating float2">
-      ✓ Gemaakt op bestelling
-    </div>
-
-    <div class="print-scene">
-
-      <div class="print-bed"></div>
-      <div class="layer-lines"></div>
-      <div class="cube"></div>
-      <div class="nozzle"></div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- ONTWERPEN -->
+<section class="hero"><div><div class="eyebrow"><i></i> Van idee naar echt object</div><h1>Jouw idee,<br><span>laagje voor laagje.</span></h1><p>Een handig model nodig, een leuk cadeau of gewoon iets dat je nergens kunt vinden? Stuur je eigen ontwerp op óf kies een simpel ontwerp uit onze collectie. Wij printen het voor je.</p><div class="hero-actions"><button class="primary" onclick="document.querySelector('#offerte').scrollIntoView()">Ik wil iets laten printen →</button><button class="secondary" onclick="document.querySelector('#ontwerpen').scrollIntoView()">Bekijk ontwerpen</button></div></div>
+<div class="hero-art"><div class="floating float1">● 8 kleuren beschikbaar</div><div class="floating float2">✓ Gemaakt op bestelling</div><div class="print-scene"><div class="print-bed"></div><div class="layer-lines"></div><div class="cube"></div><div class="nozzle"></div></div></div></section>
 
 <section class="section" id="ontwerpen">
+<div class="section-head"><div><div class="eyebrow">Kies & print</div><h2>Simpele ontwerpen,<br>klaar om te maken.</h2></div><p>Geen ingewikkelde modellen. Gewoon leuke, handige prints die je snel kunt bestellen en zelf een kleur kunt geven.</p></div>
+<div class="cards">
 
-  <div class="section-head">
+<article class="card"><div class="card-art"><div class="model key"></div></div><div class="card-body"><h3>Naam-sleutelhanger</h3><p>Een persoonlijke sleutelhanger met jouw naam.</p><span class="pill">Vanaf €3,50</span><button class="use" onclick="chooseModel('Naam-sleutelhanger')">Kiezen</button></div></article>
 
-    <div>
-      <div class="eyebrow">Kies & print</div>
+<article class="card"><div class="card-art"><div class="model stand"></div></div><div class="card-body"><h3>Telefoonstandaard</h3><p>Klein, stevig en handig voor je bureau.</p><span class="pill">Vanaf €5,00</span><button class="use" onclick="chooseModel('Telefoonstandaard')">Kiezen</button></div></article>
 
-      <h2>
-        Simpele ontwerpen,<br>
-        klaar om te maken.
-      </h2>
-    </div>
+<article class="card"><div class="card-art"><div class="model pot"></div></div><div class="card-body"><h3>Mini plantenpot</h3><p>Een vrolijk potje voor een klein plantje.</p><span class="pill">Vanaf €4,50</span><button class="use" onclick="chooseModel('Mini plantenpot')">Kiezen</button></div></article>
 
-    <p>
-      Geen ingewikkelde modellen. Gewoon leuke, handige prints die je snel
-      kunt bestellen en zelf een kleur kunt geven.
-    </p>
+<article class="card"><div class="card-art"><div class="model clip"></div></div><div class="card-body"><h3>Kabelclip</h3><p>Houd je kabels netjes op hun plek.</p><span class="pill">Vanaf €2,00</span><button class="use" onclick="chooseModel('Kabelclip')">Kiezen</button></div></article>
 
-  </div>
+<article class="card"><div class="card-art"><div class="model tag"></div></div><div class="card-body"><h3>Taslabel</h3><p>Een opvallend label voor tas, koffer of sportspullen.</p><span class="pill">Vanaf €3,00</span><button class="use" onclick="chooseModel('Taslabel')">Kiezen</button></div></article>
 
+<article class="card"><div class="card-art"><div class="model box"></div></div><div class="card-body"><h3>Klein opbergbakje</h3><p>Voor oortjes, muntjes, schroefjes en meer.</p><span class="pill">Vanaf €4,00</span><button class="use" onclick="chooseModel('Klein opbergbakje')">Kiezen</button></div></article>
 
-  <div class="cards">
+<article class="card"><div class="card-art"><div class="model coaster"></div></div><div class="card-body"><h3>Onderzetter</h3><p>Een simpele onderzetter voor je beker of glas.</p><span class="pill">Vanaf €2,50</span><button class="use" onclick="chooseModel('Onderzetter')">Kiezen</button></div></article>
 
-    <article class="card">
-      <div class="card-art">
-        <div class="model key"></div>
-      </div>
-      <div class="card-body">
-        <h3>Naam-sleutelhanger</h3>
-        <p>Een persoonlijke sleutelhanger met jouw naam.</p>
-        <span class="pill">Vanaf €3,50</span>
-        <button class="use" onclick="chooseModel('Naam-sleutelhanger')">
-          Kiezen
-        </button>
-      </div>
-    </article>
+<article class="card"><div class="card-art"><div class="model hook"></div></div><div class="card-body"><h3>Wandhaakje</h3><p>Handig haakje voor lichte spullen aan de muur.</p><span class="pill">Vanaf €3,00</span><button class="use" onclick="chooseModel('Wandhaakje')">Kiezen</button></div></article>
 
+<article class="card"><div class="card-art"><div class="model marker"></div></div><div class="card-body"><h3>Plantensteker</h3><p>Een klein label om je planten te herkennen.</p><span class="pill">Vanaf €2,50</span><button class="use" onclick="chooseModel('Plantensteker')">Kiezen</button></div></article>
 
-    <article class="card">
-      <div class="card-art">
-        <div class="model stand"></div>
-      </div>
-      <div class="card-body">
-        <h3>Telefoonstandaard</h3>
-        <p>Klein, stevig en handig voor je bureau.</p>
-        <span class="pill">Vanaf €5,00</span>
-        <button class="use" onclick="chooseModel('Telefoonstandaard')">
-          Kiezen
-        </button>
-      </div>
-    </article>
+<article class="card"><div class="card-art"><div class="model star"></div></div><div class="card-body"><h3>Sterretje</h3><p>Een vrolijke decoratie voor bureau of kamer.</p><span class="pill">Vanaf €2,50</span><button class="use" onclick="chooseModel('Sterretje')">Kiezen</button></div></article>
 
+<article class="card"><div class="card-art"><div class="model tray"></div></div><div class="card-body"><h3>Mini dienblad</h3><p>Een klein bakje voor sleutels en andere spullen.</p><span class="pill">Vanaf €4,50</span><button class="use" onclick="chooseModel('Mini dienblad')">Kiezen</button></div></article>
 
-    <article class="card">
-      <div class="card-art">
-        <div class="model pot"></div>
-      </div>
-      <div class="card-body">
-        <h3>Mini plantenpot</h3>
-        <p>Een vrolijk potje voor een klein plantje.</p>
-        <span class="pill">Vanaf €4,50</span>
-        <button class="use" onclick="chooseModel('Mini plantenpot')">
-          Kiezen
-        </button>
-      </div>
-    </article>
+<article class="card"><div class="card-art"><div class="model spinner"></div></div><div class="card-body"><h3>Fidget spinner</h3><p>Een klein draai-speeltje voor je handen.</p><span class="pill">Vanaf €4,00</span><button class="use" onclick="chooseModel('Fidget spinner')">Kiezen</button></div></article>
 
+<article class="card"><div class="card-art"><div class="model cube-fidget"></div></div><div class="card-body"><h3>Fidget kubus</h3><p>Draai, klik en speel met een compact bureauspeeltje.</p><span class="pill">Vanaf €4,50</span><button class="use" onclick="chooseModel('Fidget kubus')">Kiezen</button></div></article>
 
-    <article class="card">
-      <div class="card-art">
-        <div class="model clip"></div>
-      </div>
-      <div class="card-body">
-        <h3>Kabelclip</h3>
-        <p>Houd je kabels netjes op hun plek.</p>
-        <span class="pill">Vanaf €2,00</span>
-        <button class="use" onclick="chooseModel('Kabelclip')">
-          Kiezen
-        </button>
-      </div>
-    </article>
+<article class="card"><div class="card-art"><div class="model flexi"></div></div><div class="card-body"><h3>Flexi diertje</h3><p>Een beweegbaar figuurtje dat je steeds opnieuw kunt bewegen.</p><span class="pill">Vanaf €5,00</span><button class="use" onclick="chooseModel('Flexi diertje')">Kiezen</button></div></article>
 
+<article class="card"><div class="card-art"><div class="model gear">⚙</div></div><div class="card-body"><h3>Draaiwiel</h3><p>Een tandwielachtig speeltje om rustig te draaien.</p><span class="pill">Vanaf €4,00</span><button class="use" onclick="chooseModel('Draaiwiel')">Kiezen</button></div></article>
 
-    <article class="card">
-      <div class="card-art">
-        <div class="model tag"></div>
-      </div>
-      <div class="card-body">
-        <h3>Taslabel</h3>
-        <p>Een opvallend label voor tas, koffer of sportspullen.</p>
-        <span class="pill">Vanaf €3,00</span>
-        <button class="use" onclick="chooseModel('Taslabel')">
-          Kiezen
-        </button>
-      </div>
-    </article>
+<article class="card"><div class="card-art"><div class="model sensory-ball"></div></div><div class="card-body"><h3>Sensorische bal</h3><p>Een grappige voelbal met reliëf voor je handen.</p><span class="pill">Vanaf €4,50</span><button class="use" onclick="chooseModel('Sensorische bal')">Kiezen</button></div></article>
 
-
-    <article class="card">
-      <div class="card-art">
-        <div class="model box"></div>
-      </div>
-      <div class="card-body">
-        <h3>Klein opbergbakje</h3>
-        <p>Voor oortjes, muntjes, schroefjes en meer.</p>
-        <span class="pill">Vanaf €4,00</span>
-        <button class="use" onclick="chooseModel('Klein opbergbakje')">
-          Kiezen
-        </button>
-      </div>
-    </article>
-
-
-    <article class="card">
-      <div class="card-art">
-        <div class="model coaster"></div>
-      </div>
-      <div class="card-body">
-        <h3>Onderzetter</h3>
-        <p>Een simpele onderzetter voor je beker of glas.</p>
-        <span class="pill">Vanaf €2,50</span>
-        <button class="use" onclick="chooseModel('Onderzetter')">
-          Kiezen
-        </button>
-      </div>
-    </article>
-
-
-    <article class="card">
-      <div class="card-art">
-        <div class="model hook"></div>
-      </div>
-      <div class="card-body">
-        <h3>Wandhaakje</h3>
-        <p>Handig haakje voor lichte spullen aan de muur.</p>
-        <span class="pill">Vanaf €3,00</span>
-        <button class="use" onclick="chooseModel('Wandhaakje')">
-          Kiezen
-        </button>
-      </div>
-    </article>
-
-
-    <article class="card">
-      <div class="card-art">
-        <div class="model marker"></div>
-      </div>
-      <div class="card-body">
-        <h3>Plantensteker</h3>
-        <p>Een klein label om je planten te herkennen.</p>
-        <span class="pill">Vanaf €2,50</span>
-        <button class="use" onclick="chooseModel('Plantensteker')">
-          Kiezen
-        </button>
-      </div>
-    </article>
-
-
-    <article class="card">
-      <div class="card-art">
-        <div class="model star"></div>
-      </div>
-      <div class="card-body">
-        <h3>Sterretje</h3>
-        <p>Een vrolijke decoratie voor bureau of kamer.</p>
-        <span class="pill">Vanaf €2,50</span>
-        <button class="use" onclick="chooseModel('Sterretje')">
-          Kiezen
-        </button>
-      </div>
-    </article>
-
-
-    <article class="card">
-      <div class="card-art">
-        <div class="model tray"></div>
-      </div>
-      <div class="card-body">
-        <h3>Mini dienblad</h3>
-        <p>Een klein bakje voor sleutels en andere spullen.</p>
-        <span class="pill">Vanaf €4,50</span>
-        <button class="use" onclick="chooseModel('Mini dienblad')">
-          Kiezen
-        </button>
-      </div>
-    </article>
-
-
-    <article class="card">
-      <div class="card-art">
-        <div class="model spinner"></div>
-      </div>
-      <div class="card-body">
-        <h3>Fidget spinner</h3>
-        <p>Een klein draai-speeltje voor je handen.</p>
-        <span class="pill">Vanaf €4,00</span>
-        <button class="use" onclick="chooseModel('Fidget spinner')">
-          Kiezen
-        </button>
-      </div>
-    </article>
-
-
-    <article class="card">
-      <div class="card-art">
-        <div class="model cube-fidget"></div>
-      </div>
-      <div class="card-body">
-        <h3>Fidget kubus</h3>
-        <p>Draai, klik en speel met een compact bureauspeeltje.</p>
-        <span class="pill">Vanaf €4,50</span>
-        <button class="use" onclick="chooseModel('Fidget kubus')">
-          Kiezen
-        </button>
-      </div>
-    </article>
-
-
-    <article class="card">
-      <div class="card-art">
-        <div class="model flexi"></div>
-      </div>
-      <div class="card-body">
-        <h3>Flexi diertje</h3>
-        <p>Een beweegbaar figuurtje dat je steeds opnieuw kunt bewegen.</p>
-        <span class="pill">Vanaf €5,00</span>
-        <button class="use" onclick="chooseModel('Flexi diertje')">
-          Kiezen
-        </button>
-      </div>
-    </article>
-
-
-    <article class="card">
-      <div class="card-art">
-        <div class="model gear">⚙</div>
-      </div>
-      <div class="card-body">
-        <h3>Draaiwiel</h3>
-        <p>Een tandwielachtig speeltje om rustig te draaien.</p>
-        <span class="pill">Vanaf €4,00</span>
-        <button class="use" onclick="chooseModel('Draaiwiel')">
-          Kiezen
-        </button>
-      </div>
-    </article>
-
-
-    <article class="card">
-      <div class="card-art">
-        <div class="model sensory-ball"></div>
-      </div>
-      <div class="card-body">
-        <h3>Sensorische bal</h3>
-        <p>Een grappige voelbal met reliëf voor je handen.</p>
-        <span class="pill">Vanaf €4,50</span>
-        <button class="use" onclick="chooseModel('Sensorische bal')">
-          Kiezen
-        </button>
-      </div>
-    </article>
-
-
-    <article class="card">
-      <div class="card-art">
-        <div class="model duck"></div>
-      </div>
-      <div class="card-body">
-        <h3>Eendje</h3>
-        <p>Een vrolijk klein speelgoedfiguurtje voor op je bureau.</p>
-        <span class="pill">Vanaf €3,50</span>
-        <button class="use" onclick="chooseModel('Eendje')">
-          Kiezen
-        </button>
-      </div>
-    </article>
-
-  </div>
-</section>
-
-
-<!-- WERKWIJZE -->
-
-<section class="how" id="werkwijze">
-
-  <div class="section">
-
-    <div class="section-head">
-
-      <div>
-        <div class="eyebrow">Zo werkt het</div>
-        <h2>Van bestand naar print.</h2>
-      </div>
-
-      <p>
-        Jij kiest wat je wilt. Wij regelen de rest.
-      </p>
-
-    </div>
-
-    <div class="steps">
-
-      <div class="step">
-        <div class="num">01</div>
-        <h3>Stuur je ontwerp</h3>
-        <p>
-          Upload een STL/3MF-bestand of vertel kort wat je wilt laten maken.
-        </p>
-      </div>
-
-      <div class="step">
-        <div class="num">02</div>
-        <h3>Kies je kleur</h3>
-        <p>
-          Kies uit geel, blauw, goud, donkergrijs, lichtgrijs,
-          zwart, rood of orange.
-        </p>
-      </div>
-
-      <div class="step">
-        <div class="num">03</div>
-        <h3>Wij printen</h3>
-        <p>
-          Na afstemming maken we jouw bestelling.
-          Je hoort van ons over prijs en levertijd.
-        </p>
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- OFFERTE -->
-
-<section class="section" id="offerte">
-
-  <div class="quote-wrap">
-
-    <div class="quote-intro">
-
-      <div class="eyebrow">Jouw print</div>
-
-      <h2>Heb je al een ontwerp?</h2>
-
-      <p>
-        Upload je bestand of kies een ontwerp hierboven.
-        Laat je kleurvoorkeur achter en vertel ons wat belangrijk is.
-      </p>
-
-    </div>
-
-
-    <form class="form" id="quoteForm">
-
-      <div class="grid2">
-
-        <div class="field">
-          <label for="name">Naam</label>
-          <input
-            id="name"
-            required
-            placeholder="Jouw naam"
-          >
-        </div>
-
-        <div class="field">
-          <label for="email">E-mail</label>
-          <input
-            id="email"
-            type="email"
-            required
-            placeholder="jij@email.nl"
-          >
-        </div>
-
-      </div>
-
-
-      <div class="field">
-
-        <label>Ontwerp</label>
-
-        <div class="upload">
-
-          <label for="file">
-
-            <strong>
-              📎 Klik om een bestand te kiezen
-            </strong>
-
-            <span>
-              STL, 3MF, OBJ of een afbeelding
-            </span>
-
-            <div class="file-name" id="fileName"></div>
-
-            <div class="file-success" id="fileSuccess">
-              ✓ Bestand succesvol gekozen!
-            </div>
-
-          </label>
-
-          <input
-            id="file"
-            type="file"
-            accept=".stl,.3mf,.obj,.png,.jpg,.jpeg"
-          >
-
-        </div>
-
-        <div class="color-help">
-          Na het invullen opent je mailapp met
-          <strong>vinz.vijn@gmail.com</strong>
-          en alle ingevulde gegevens.
-          Voeg je gekozen ontwerpbestand daar nog even als bijlage toe.
-        </div>
-
-      </div>
-
-
-      <div class="field">
-
-        <label>Welke kleur(en)?</label>
-
-        <div class="color-help">
-          Klik op één of meerdere kleurbolletjes.
-          Kies maximaal 4 kleuren.
-        </div>
-
-        <div class="colors" id="colorChoices">
-
-          <div class="color-choice selected" data-color="Geel">
-            <span class="color yellow"></span>
-            <span>Geel</span>
-          </div>
-
-          <div class="color-choice" data-color="Blauw">
-            <span class="color blue"></span>
-            <span>Blauw</span>
-          </div>
-
-          <div class="color-choice" data-color="Goud">
-            <span class="color gold"></span>
-            <span>Goud</span>
-          </div>
-
-          <div class="color-choice" data-color="Donker grijs">
-            <span class="color dark"></span>
-            <span>Donker grijs</span>
-          </div>
-
-          <div class="color-choice" data-color="Licht grijs">
-            <span class="color light"></span>
-            <span>Licht grijs</span>
-          </div>
-
-          <div class="color-choice" data-color="Zwart">
-            <span class="color black"></span>
-            <span>Zwart</span>
-          </div>
-
-          <div class="color-choice" data-color="Rood">
-            <span class="color red"></span>
-            <span>Rood</span>
-          </div>
-
-          <div class="color-choice" data-color="Orange">
-            <span class="color orange"></span>
-            <span>Orange</span>
-          </div>
-
-        </div>
-
-
-        <div class="color-price">
-          + €0,50 per extra kleur
-        </div>
-
-
-        <div class="color-slots" id="colorSlots"></div>
-
-
-        <div class="color-help">
-          Bij meerdere kleuren geef je aan waar elke kleur moet komen.
-        </div>
-
-      </div>
-
-
-      <div class="grid2">
-
-        <div class="field">
-          <label for="qty">Aantal</label>
-          <input
-            id="qty"
-            type="number"
-            min="1"
-            value="1"
-            required
-          >
-        </div>
-
-        <div class="field">
-          <label for="model">Gekozen ontwerp</label>
-          <input
-            id="model"
-            placeholder="Eigen ontwerp"
-            required
-          >
-        </div>
-
-      </div>
-
-
-      <div class="field">
-
-        <label for="size">Formaat</label>
-
-        <select
-          id="size"
-          style="
-            width:100%;
-            border:1px solid var(--line);
-            background:#f4efe5;
-            border-radius:13px;
-            padding:12px 13px
-          "
-        >
-          <option>
-            Mini — ongeveer 3–5 cm
-          </option>
-
-          <option>
-            Klein — ongeveer 5–8 cm
-          </option>
-
-          <option>
-            Middel — ongeveer 8–12 cm
-          </option>
-
-          <option>
-            Groot — ongeveer 12–20 cm
-          </option>
-
-          <option>
-            Anders — beschrijf het bij opmerkingen
-          </option>
-        </select>
-
-      </div>
-
-
-      <div class="field">
-
-        <label for="note">Opmerking</label>
-
-        <textarea
-          id="note"
-          placeholder="Bijvoorbeeld: extra wensen, tekst of details..."
-        ></textarea>
-
-      </div>
-
-
-      <button class="submit" type="submit">
-        ✉ Naar mijn mail app — aanvraag versturen
-      </button>
-
-
-      <div class="notice" id="notice">
-        Je mailapp wordt geopend met alle ingevulde gegevens
-        voor vinz.vijn@gmail.com.
-        Voeg je ontwerpbestand nog als bijlage toe en verstuur de mail.
-      </div>
-
-    </form>
-
-  </div>
-
-</section>
-
-</main>
-
-
-<footer class="footer">
-
-  <div class="footer-inner">
-
-    <div>
-      <strong>Laagje voor Laagje</strong>
-      <br>
-      <small>
-        3D prints die beginnen bij een idee.
-      </small>
-    </div>
-
-    <small>
-      © 2026 Laagje voor Laagje · Demo website
-    </small>
-
-  </div>
-
-</footer>
+<article class="card"><div class="card-art"><div class="model duck"></div></div><div class="card-body"><h3>Eendje</h3><p>Een vrolijk klein speelgoedfiguurtje voor op je bureau.</p><span class="pill">Vanaf €3,50</span><button class="use" onclick="chooseModel('Eendje')">Kiezen</button></div></article>
 
 </div>
+</section>
 
+<section class="how" id="werkwijze">
+<div class="section">
+<div class="section-head"><div><div class="eyebrow">Zo werkt het</div><h2>Van bestand naar print.</h2></div><p>Jij kiest wat je wilt. Wij regelen de rest.</p></div>
+<div class="steps">
+<div class="step"><div class="num">01</div><h3>Stuur je ontwerp</h3><p>Upload een STL/3MF-bestand of vertel kort wat je wilt laten maken.</p></div>
+<div class="step"><div class="num">02</div><h3>Kies je kleur</h3><p>Kies uit geel, blauw, goud, donkergrijs, lichtgrijs, zwart, rood of orange.</p></div>
+<div class="step"><div class="num">03</div><h3>Wij printen</h3><p>Na afstemming maken we jouw bestelling. Je hoort van ons over prijs en levertijd.</p></div>
+</div>
+</div>
+</section>
+
+<section class="section" id="offerte">
+<div class="quote-wrap">
+<div class="quote-intro">
+<div class="eyebrow">Jouw print</div>
+<h2>Heb je al een ontwerp?</h2>
+<p>Upload je bestand of kies een ontwerp hierboven. Laat je kleurvoorkeur achter en vertel ons wat belangrijk is.</p>
+<div class="mini-logo">
+<svg viewBox="0 0 40 40" fill="none" width="40">
+<path d="M8 27.5 20 34l12-6.5V12.5L20 6 8 12.5v15Z" stroke="white" stroke-width="2.5"/>
+<path d="M8.5 20 20 26l11.5-6M20 7v19" stroke="#ff5648" stroke-width="2.5"/>
+</svg>
+</div>
+</div>
+
+<form class="form" id="quoteForm">
+<div class="grid2">
+<div class="field"><label for="name">Naam</label><input id="name" required placeholder="Jouw naam"></div>
+<div class="field"><label for="email">E-mail</label><input id="email" type="email" required placeholder="jij@email.nl"></div>
+</div>
+
+<div class="field">
+<label>Ontwerp</label>
+<div class="upload">
+<label for="file">
+<strong>📎 Klik om een bestand te kiezen</strong>
+<span>STL, 3MF, OBJ of een afbeelding</span>
+<div class="file-name" id="fileName"></div>
+<div class="file-success" id="fileSuccess">✓ Bestand succesvol gekozen!</div>
+</label>
+<input id="file" type="file" accept=".stl,.3mf,.obj,.png,.jpg,.jpeg">
+</div>
+<div class="color-help">Na het invullen opent je mailapp met <strong>vinz.vijn@gmail.com</strong> en alle ingevulde gegevens. Voeg je gekozen ontwerpbestand daar nog even als bijlage toe.</div>
+</div>
+
+<div class="field">
+<label>Welke kleur(en)?</label>
+<div class="color-help">Klik op één of meerdere kleurbolletjes. Kies maximaal 4 kleuren.</div>
+
+<div class="colors" id="colorChoices" aria-label="Beschikbare kleuren">
+<div class="color-choice selected" data-color="Geel"><span class="color yellow"></span><span>Geel</span></div>
+<div class="color-choice" data-color="Blauw"><span class="color blue"></span><span>Blauw</span></div>
+<div class="color-choice" data-color="Goud"><span class="color gold"></span><span>Goud</span></div>
+<div class="color-choice" data-color="Donker grijs"><span class="color dark"></span><span>Donker grijs</span></div>
+<div class="color-choice" data-color="Licht grijs"><span class="color light"></span><span>Licht grijs</span></div>
+<div class="color-choice" data-color="Zwart"><span class="color black"></span><span>Zwart</span></div>
+<div class="color-choice" data-color="Rood"><span class="color red"></span><span>Rood</span></div>
+<div class="color-choice" data-color="Orange"><span class="color orange"></span><span>Orange</span></div>
+</div>
+
+<div class="color-price">+ €0,50 per extra kleur</div>
+
+<div class="color-slots" id="colorSlots">
+<div class="color-slot"><span class="slot-dot yellow"></span><select class="slot-color"><option>Geel</option><option>Blauw</option><option>Goud</option><option>Donker grijs</option><option>Licht grijs</option><option>Zwart</option><option>Rood</option><option>Orange</option></select><input class="slot-place" placeholder="Waar? Bijvoorbeeld: voorkant"></div>
+<div class="color-slot"><span class="slot-dot blue"></span><select class="slot-color"><option>Blauw</option><option>Geel</option><option>Goud</option><option>Donker grijs</option><option>Licht grijs</option><option>Zwart</option><option>Rood</option><option>Orange</option></select><input class="slot-place" placeholder="Waar? Bijvoorbeeld: tekst"></div>
+<div class="color-slot"><span class="slot-dot red"></span><select class="slot-color"><option>Rood</option><option>Geel</option><option>Blauw</option><option>Goud</option><option>Donker grijs</option><option>Licht grijs</option><option>Zwart</option><option>Orange</option></select><input class="slot-place" placeholder="Waar? Bijvoorbeeld: rand"></div>
+<div class="color-slot"><span class="slot-dot black"></span><select class="slot-color"><option>Zwart</option><option>Geel</option><option>Blauw</option><option>Goud</option><option>Donker grijs</option><option>Licht grijs</option><option>Rood</option><option>Orange</option></select><input class="slot-place" placeholder="Waar? Bijvoorbeeld: achterkant"></div>
+</div>
+
+<div class="color-help">Bij meerdere kleuren geef je hieronder aan waar elke kleur moet komen.</div>
+</div>
+
+<div class="grid2">
+<div class="field"><label for="qty">Aantal</label><input id="qty" type="number" min="1" value="1" required></div>
+<div class="field"><label for="model">Gekozen ontwerp</label><input id="model" placeholder="Eigen ontwerp" required></div>
+</div>
+
+<div class="field">
+<label for="size">Formaat</label>
+<select id="size" style="width:100%;border:1px solid var(--line);background:#f4efe5;border-radius:13px;padding:12px 13px">
+<option>Mini — ongeveer 3–5 cm</option>
+<option>Klein — ongeveer 5–8 cm</option>
+<option>Middel — ongeveer 8–12 cm</option>
+<option>Groot — ongeveer 12–20 cm</option>
+<option>Anders — beschrijf het bij opmerkingen</option>
+</select>
+</div>
+
+<div class="field">
+<label for="note">Opmerking</label>
+<textarea id="note" placeholder="Bijvoorbeeld: extra wensen, tekst of details..."></textarea>
+</div>
+
+<button class="submit" type="submit">✉ Naar mijn mail app — aanvraag versturen</button>
+<div class="notice" id="notice">Je mailapp wordt geopend met alle ingevulde gegevens voor vinz.vijn@gmail.com. Voeg je ontwerpbestand nog als bijlage toe en verstuur de mail.</div>
+</form>
+</div>
+</section>
+</main>
+
+<footer class="footer">
+<div class="footer-inner">
+<div><strong>Laagje voor Laagje</strong><br><small>3D prints die beginnen bij een idee.</small></div>
+<small>© 2026 Laagje voor Laagje · Demo website</small>
+</div>
+</footer>
+</div>
 
 <script>
-
-/* KLEUREN */
-
-const colorClasses = {
+const colorClasses={
   'Geel':'yellow',
   'Blauw':'blue',
   'Goud':'gold',
@@ -1955,402 +380,153 @@ const colorClasses = {
   'Orange':'orange'
 };
 
-const selectedColors = new Set(['Geel']);
-
+const selectedColors=new Set(['Geel']);
 
 function syncColorSlots(){
-
-  const slots = document.querySelector('#colorSlots');
-
-  slots.innerHTML = [...selectedColors]
-    .map(color => `
-      <div class="color-slot">
-        <span class="slot-dot ${colorClasses[color]}"></span>
-        <input
-          class="slot-place"
-          placeholder="Waar wil je ${color}?"
-        >
-      </div>
-    `)
-    .join('');
-
-  slots.classList.toggle(
-    'show',
-    selectedColors.size > 1
-  );
+  const slots=document.querySelector('#colorSlots');
+  slots.innerHTML=[...selectedColors].map(color=>'<div class="color-slot"><span class="slot-dot '+colorClasses[color]+'"></span><input class="slot-place" placeholder="Waar wil je '+color+'?"></div>').join('');
+  slots.classList.toggle('show',selectedColors.size>1);
 }
 
+document.querySelectorAll('.color-choice').forEach(choice=>choice.addEventListener('click',()=>{
+  const color=choice.dataset.color;
 
-document
-  .querySelectorAll('.color-choice')
-  .forEach(choice => {
+  if(selectedColors.has(color)){
+    if(selectedColors.size>1) selectedColors.delete(color);
+  }else if(selectedColors.size<4){
+    selectedColors.add(color);
+  }
 
-    choice.addEventListener('click', () => {
-
-      const color = choice.dataset.color;
-
-      if(selectedColors.has(color)){
-
-        if(selectedColors.size > 1){
-          selectedColors.delete(color);
-        }
-
-      }else if(selectedColors.size < 4){
-
-        selectedColors.add(color);
-
-      }
-
-      document
-        .querySelectorAll('.color-choice')
-        .forEach(c => {
-
-          c.classList.toggle(
-            'selected',
-            selectedColors.has(c.dataset.color)
-          );
-
-        });
-
-      syncColorSlots();
-
-    });
-
+  document.querySelectorAll('.color-choice').forEach(c=>{
+    c.classList.toggle('selected',selectedColors.has(c.dataset.color));
   });
 
+  syncColorSlots();
+}));
 
 syncColorSlots();
 
+const file=document.querySelector('#file');
 
-/* BESTAND UPLOADEN */
-
-const file = document.querySelector('#file');
-
-file.addEventListener('change', () => {
-
-  const chosen = file.files[0];
-
-  document.querySelector('#fileName').textContent =
-    chosen ? chosen.name : '';
-
-  document
-    .querySelector('#fileSuccess')
-    .classList.toggle(
-      'show',
-      !!chosen
-    );
-
+file.addEventListener('change',()=>{
+  const chosen=file.files[0];
+  document.querySelector('#fileName').textContent=chosen?chosen.name:'';
+  document.querySelector('#fileSuccess').classList.toggle('show',!!chosen);
 });
 
-
-/* ONTWERP KIEZEN */
-
 function chooseModel(name){
-
-  document.querySelector('#model').value = name;
-
-  document
-    .querySelector('#offerte')
-    .scrollIntoView({
-      behavior:'smooth'
-    });
-
-  setTimeout(() => {
-    document.querySelector('#name').focus();
-  },450);
-
+  document.querySelector('#model').value=name;
+  document.querySelector('#offerte').scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>document.querySelector('#name').focus(),450);
 }
 
-
-/* MAIL */
-
-let pendingMail = {
+let pendingMail={
   subject:'',
   body:''
 };
 
-
 function isMobile(){
-
-  return /Android|iPhone|iPad|iPod|Mobile/i.test(
-    navigator.userAgent
-  ) ||
-  window.matchMedia(
-    '(max-width: 700px)'
-  ).matches;
-
+  return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) ||
+         window.matchMedia('(max-width: 700px)').matches;
 }
-
 
 function closeMailChoice(){
-
-  const box = document.querySelector('#mailChoice');
+  const box=document.querySelector('#mailChoice');
 
   if(box){
-
     box.classList.remove('show');
-
-    box.setAttribute(
-      'aria-hidden',
-      'true'
-    );
-
+    box.setAttribute('aria-hidden','true');
   }
-
 }
-
 
 function openMail(service){
+  const to='vinz.vijn@gmail.com';
+  const subject=encodeURIComponent(pendingMail.subject);
+  const body=encodeURIComponent(pendingMail.body);
 
-  const to = 'vinz.vijn@gmail.com';
+  const url=service==='gmail'
+    ? 'https://mail.google.com/mail/u/0/?view=cm&fs=1&to='+encodeURIComponent(to)+'&su='+subject+'&body='+body
+    : 'https://outlook.live.com/mail/0/deeplink/compose?to='+encodeURIComponent(to)+'&subject='+subject+'&body='+body;
 
-  const subject =
-    encodeURIComponent(
-      pendingMail.subject
-    );
-
-  const body =
-    encodeURIComponent(
-      pendingMail.body
-    );
-
-
-  const url =
-    service === 'gmail'
-
-      ? 'https://mail.google.com/mail/?view=cm&fs=1&to='
-        + encodeURIComponent(to)
-        + '&su='
-        + subject
-        + '&body='
-        + body
-
-      : 'https://outlook.live.com/mail/0/deeplink/compose?to='
-        + encodeURIComponent(to)
-        + '&subject='
-        + subject
-        + '&body='
-        + body;
-
-
-  window.location.assign(url);
-
+  window.open(url,'_blank','noopener,noreferrer');
+  closeMailChoice();
 }
 
+document.querySelector('#quoteForm').addEventListener('submit',e=>{
+  e.preventDefault();
 
-/* FORMULIER */
+  const rows=[...document.querySelectorAll('.color-slot')]
+    .map((row,i)=>{
+      const color=[...selectedColors][i];
+      const place=row.querySelector('.slot-place').value.trim();
 
-document
-  .querySelector('#quoteForm')
-  .addEventListener('submit', e => {
+      return selectedColors.size>1
+        ? (place?color+' — '+place:'')
+        : color;
+    })
+    .filter(Boolean);
 
-    e.preventDefault();
+  const subject='Nieuwe 3D print aanvraag — '+document.querySelector('#model').value;
 
+  const body=[
+    'Hallo Laagje voor Laagje,',
+    '',
+    'Naam: '+document.querySelector('#name').value,
+    'E-mail: '+document.querySelector('#email').value,
+    'Ontwerp: '+document.querySelector('#model').value,
+    'Aantal: '+document.querySelector('#qty').value,
+    'Formaat: '+document.querySelector('#size').value,
+    '',
+    'Kleuren en waar ze komen:',
+    rows.length?rows.join('\n'):'Geen kleurvoorkeur ingevuld.',
+    '',
+    'Opmerking:',
+    document.querySelector('#note').value||'Geen opmerking',
+    '',
+    'Ontwerpbestand: '+(file.files[0]?file.files[0].name:'Geen bestand gekozen'),
+    '',
+    'Ik voeg het ontwerpbestand als bijlage toe.'
+  ].join('\n');
 
-    const rows =
-      [...document.querySelectorAll('.color-slot')]
-      .map((row,i) => {
+  pendingMail={
+    subject,
+    body
+  };
 
-        const color =
-          [...selectedColors][i];
+  if(isMobile()){
+    window.location.href=
+      'mailto:vinz.vijn@gmail.com?subject='+
+      encodeURIComponent(subject)+
+      '&body='+
+      encodeURIComponent(body);
 
-        const place =
-          row
-            .querySelector('.slot-place')
-            .value
-            .trim();
+    document.querySelector('#notice').classList.add('show');
 
+  }else{
 
-        return selectedColors.size > 1
-
-          ? (
-              place
-                ? color + ' — ' + place
-                : ''
-            )
-
-          : color;
-
-      })
-      .filter(Boolean);
-
-
-    const subject =
-      'Nieuwe 3D print aanvraag — '
-      + document.querySelector('#model').value;
-
-
-    const body = [
-
-      'Hallo Laagje voor Laagje,',
-
-      '',
-
-      'Naam: '
-        + document.querySelector('#name').value,
-
-      'E-mail: '
-        + document.querySelector('#email').value,
-
-      'Ontwerp: '
-        + document.querySelector('#model').value,
-
-      'Aantal: '
-        + document.querySelector('#qty').value,
-
-      'Formaat: '
-        + document.querySelector('#size').value,
-
-      '',
-
-      'Kleuren en waar ze komen:',
-
-      rows.length
-        ? rows.join('\n')
-        : 'Geen kleurvoorkeur ingevuld.',
-
-      '',
-
-      'Opmerking:',
-
-      document.querySelector('#note').value
-        || 'Geen opmerking',
-
-      '',
-
-      'Ontwerpbestand: '
-        + (
-          file.files[0]
-            ? file.files[0].name
-            : 'Geen bestand gekozen'
-        ),
-
-      '',
-
-      'Ik voeg het ontwerpbestand als bijlage toe.'
-
-    ].join('\n');
-
-
-    pendingMail = {
-      subject,
-      body
-    };
-
-
-    /*
-      Op mobiel:
-      gebruik de standaard mailapp.
-    */
-
-    if(isMobile()){
-
-      window.location.href =
-        'mailto:vinz.vijn@gmail.com'
-        + '?subject='
-        + encodeURIComponent(subject)
-        + '&body='
-        + encodeURIComponent(body);
-
-      document
-        .querySelector('#notice')
-        .classList.add('show');
-
-      return;
-
-    }
-
-
-    /*
-      Op computer:
-      laat kiezen tussen Gmail en Outlook.
-    */
-
-    const existing =
+    const box=document.querySelector('#mailChoice') ||
+      document.body.insertAdjacentHTML(
+        'beforeend',
+        '<div class="mail-choice" id="mailChoice" aria-hidden="true">'+
+        '<div class="mail-choice-box">'+
+        '<h3>Waar wil je je aanvraag openen?</h3>'+
+        '<p>Op een computer kun je kiezen tussen Gmail en Outlook.</p>'+
+        '<div class="mail-options">'+
+        '<button class="mail-option" type="button" onclick="openMail(\'gmail\')">Gmail</button>'+
+        '<button class="mail-option" type="button" onclick="openMail(\'outlook\')">Outlook</button>'+
+        '</div>'+
+        '<button class="mail-cancel" type="button" onclick="closeMailChoice()">Annuleren</button>'+
+        '</div>'+
+        '</div>'
+      ) ||
       document.querySelector('#mailChoice');
 
-
-    if(existing){
-
-      existing.classList.add('show');
-
-      existing.setAttribute(
-        'aria-hidden',
-        'false'
-      );
-
-      return;
-
-    }
-
-
-    document.body.insertAdjacentHTML(
-      'beforeend',
-
-      `
-      <div
-        class="mail-choice"
-        id="mailChoice"
-        aria-hidden="true"
-      >
-
-        <div class="mail-choice-box">
-
-          <h3>
-            Waar wil je je aanvraag openen?
-          </h3>
-
-          <p>
-            Op een computer kun je kiezen tussen Gmail en Outlook.
-          </p>
-
-          <div class="mail-options">
-
-            <button
-              class="mail-option"
-              type="button"
-              onclick="openMail('gmail')"
-            >
-              Gmail
-            </button>
-
-            <button
-              class="mail-option"
-              type="button"
-              onclick="openMail('outlook')"
-            >
-              Outlook
-            </button>
-
-          </div>
-
-          <button
-            class="mail-cancel"
-            type="button"
-            onclick="closeMailChoice()"
-          >
-            Annuleren
-          </button>
-
-        </div>
-
-      </div>
-      `
-    );
-
-
-    const choice =
-      document.querySelector('#mailChoice');
+    const choice=document.querySelector('#mailChoice');
 
     choice.classList.add('show');
-
-    choice.setAttribute(
-      'aria-hidden',
-      'false'
-    );
-
-  });
-
+    choice.setAttribute('aria-hidden','false');
+  }
+});
 </script>
 
 </body>
