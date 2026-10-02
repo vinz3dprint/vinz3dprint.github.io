@@ -56,8 +56,8 @@ button,input,textarea{font:inherit} button{cursor:pointer}
 </div></section>
 <section class="how" id="werkwijze"><div class="section"><div class="section-head"><div><div class="eyebrow">Zo werkt het</div><h2>Van bestand naar print.</h2></div><p>Jij kiest wat je wilt. Wij regelen de rest.</p></div><div class="steps"><div class="step"><div class="num">01</div><h3>Stuur je ontwerp</h3><p>Upload een STL/3MF-bestand of vertel kort wat je wilt laten maken.</p></div><div class="step"><div class="num">02</div><h3>Kies je kleur</h3><p>Kies uit geel, blauw, goud, donkergrijs, lichtgrijs, zwart, rood of orange.</p></div><div class="step"><div class="num">03</div><h3>Wij printen</h3><p>Na afstemming maken we jouw bestelling. Je hoort van ons over prijs en levertijd.</p></div></div></div></section>
 <section class="section" id="offerte"><div class="quote-wrap"><div class="quote-intro"><div class="eyebrow">Jouw print</div><h2>Heb je al een ontwerp?</h2><p>Upload je bestand of kies een ontwerp hierboven. Laat je kleurvoorkeur achter en vertel ons wat belangrijk is.</p><div class="mini-logo"><svg viewBox="0 0 40 40" fill="none" width="40"><path d="M8 27.5 20 34l12-6.5V12.5L20 6 8 12.5v15Z" stroke="white" stroke-width="2.5"/><path d="M8.5 20 20 26l11.5-6M20 7v19" stroke="#ff5648" stroke-width="2.5"/></svg></div></div>
-<form class="form" id="quoteForm"><div class="grid2"><div class="field"><label for="name">Naam</label><input id="name" required placeholder="Jouw naam"></div><div class="field"><label for="email">E-mail</label><input id="email" type="email" required placeholder="jij@email.nl"></div></div>
-<div class="field"><label>Ontwerp</label><div class="upload"><label for="file"><strong>📎 Klik om een bestand te kiezen</strong><span>STL, 3MF of een afbeelding</span><div class="file-name" id="fileName"></div></label><input id="file" type="file" accept=".stl,.3mf,.obj,.png,.jpg,.jpeg"></div></div>
+<form class="form" id="quoteForm" enctype="multipart/form-data">><div class="grid2"><div class="field"><label for="name">Naam</label><input id="name" name="fi-sender-fullName" required placeholder="Jouw naam"></div><div class="field"><label for="email">E-mail</label><input id="email" name="fi-sender-email" type="email" required placeholder="jij@email.nl"></div></div>
+<div class="field"><label>Ontwerp</label><div class="upload"><label for="file"><strong>📎 Klik om een bestand te kiezen</strong><span>STL, 3MF of een afbeelding</span><div class="file-name" id="fileName"></div></label><input id="file" name="fi-file-ontwerp" type="file" accept=".stl,.3mf,.obj,.png,.jpg,.jpeg"></div></div>
 <div class="field"><label>Meerdere kleuren & waar ze komen</label><div class="colors" aria-label="Beschikbare kleuren"><span class="color yellow" title="Geel"></span><span class="color blue" title="Blauw"></span><span class="color gold" title="Goud"></span><span class="color dark" title="Donker grijs"></span><span class="color light" title="Licht grijs"></span><span class="color black" title="Zwart"></span><span class="color red" title="Rood"></span><span class="color orange" title="Orange"></span></div><div class="color-slots" id="colorSlots">
 <div class="color-slot"><span class="slot-dot yellow"></span><select class="slot-color"><option>Geel</option><option>Blauw</option><option>Goud</option><option>Donker grijs</option><option>Licht grijs</option><option>Zwart</option><option>Rood</option><option>Orange</option></select><input class="slot-place" placeholder="Waar? Bijvoorbeeld: voorkant"></div>
 <div class="color-slot"><span class="slot-dot blue"></span><select class="slot-color"><option>Blauw</option><option>Geel</option><option>Goud</option><option>Donker grijs</option><option>Licht grijs</option><option>Zwart</option><option>Rood</option><option>Orange</option></select><input class="slot-place" placeholder="Waar? Bijvoorbeeld: tekst"></div>
@@ -70,12 +70,34 @@ button,input,textarea{font:inherit} button{cursor:pointer}
 </main>
 <footer class="footer"><div class="footer-inner"><div><strong>Laagje voor Laagje</strong><br><small>3D prints die beginnen bij een idee.</small></div><small>© 2026 Laagje voor Laagje · Demo website</small></div></footer>
 </div>
+<script src="https://forminit.com/sdk/v1/forminit.js"></script>
 <script>
 const file=document.querySelector('#file');
 file.addEventListener('change',()=>{document.querySelector('#fileName').textContent=file.files[0]?file.files[0].name:''});
 const colorClasses={'Geel':'yellow','Blauw':'blue','Goud':'gold','Donker grijs':'dark','Licht grijs':'light','Zwart':'black','Rood':'red','Orange':'orange'};
 document.querySelectorAll('.slot-color').forEach(select=>select.addEventListener('change',()=>{select.parentElement.querySelector('.slot-dot').className='slot-dot '+colorClasses[select.value]}));
 function chooseModel(name){document.querySelector('#model').value=name;document.querySelector('#offerte').scrollIntoView({behavior:'smooth'});setTimeout(()=>document.querySelector('#name').focus(),450)}
-document.querySelector('#quoteForm').addEventListener('submit',e=>{e.preventDefault();document.querySelector('#notice').classList.add('show');document.querySelector('#notice').scrollIntoView({behavior:'smooth',block:'nearest'})});
-</script>
+document.querySelector('#quoteForm').addEventListener('submit',e=>{e.preventDefault();docu
 </body></html>
+const forminit = new Forminit();
+const FORM_ID = 'fzjfc5jnliy';
+
+document.querySelector('#quoteForm').addEventListener('submit', async e => {
+  e.preventDefault();
+
+  const notice = document.querySelector('#notice');
+  notice.textContent = 'Aanvraag wordt verstuurd...';
+  notice.classList.add('show');
+
+  const formData = new FormData(e.target);
+  const { error } = await forminit.submit(FORM_ID, formData);
+
+  if (error) {
+    notice.textContent = 'Er ging iets mis: ' + error.message;
+    return;
+  }
+
+  notice.textContent = 'Bedankt! Je aanvraag is verstuurd.';
+  e.target.reset();
+  document.querySelector('#fileName').textContent = '';
+});
